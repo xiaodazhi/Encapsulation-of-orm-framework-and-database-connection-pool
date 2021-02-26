@@ -26,8 +26,9 @@
 并支持策略模式  用户实现RowMapper接口  并自己写出将结果集中的数据组合成对象的策略
 将策略作为参数传入方法  框架就可根据用户提供的策略来组成对象
 例如
-class CarMapper implements RowMapper<Car> {
 
+```java
+class CarMapper implements RowMapper<Car> {
     @Override
     public Car mapping(Map<String,Object> rs) throws Exception {
         Integer cno = (Integer) rs.get("cno");
@@ -37,6 +38,8 @@ class CarMapper implements RowMapper<Car> {
         return new Car(cno,cname,color,price);
     }
 }
+```
+
 
 
 如需使用  请将工程中的jdbc包  util包放在一起  打成Jar包  放入工程中即可使用
@@ -52,7 +55,7 @@ class CarMapper implements RowMapper<Car> {
 username  password  url  driver  total  maxWait  minIdle
 total  maxWait  minIdle这三个参数与封装的数据库连接池有关
 total  数据库连接池中最大连接数
-maxWait  连接最大等待时间  此参数是数据库连接池中目前已无可用的连接  
+maxWait  连接最大等待时间  此参数是数据库连接池中目前已无可用的连接时的等待最大等待连接的时间  
 配置此参数是为了等待连接池中可用的连接  当超过等待时间  则会报错
 minIdle  数据库连接池中的最小空闲连接数  此参数是连接池扩容的条件
 当数据库中的连接达到最小空闲连接数时  连接池将自动扩容  每次扩容10个连接
@@ -67,7 +70,7 @@ maxWait=3000
 minIdle=2
 
 新增记录 
- 
+
 请在dao中设计新增方法
 请将domain对象作为参数传入方法
 并使用新的语法#{}写出sql语句
@@ -147,8 +150,10 @@ dao.findAll("bmw3");
 在注解中写对应的sql语句
 
 示例
-public interface CarDao {
 
+
+```java
+public interface CarDao {
     @Insert("insert into t_car values(null, #{cname}, #{color}, #{price})")
     public int save(Car car);
 
@@ -160,8 +165,10 @@ public interface CarDao {
 
     @Select("select * from t_car where cno = #{cno}")
     public Car findById(int cno) ;
-
 }
+```
+
+
 
 测试基于注解
 CarDao3 dao = MysqlFactoryUtil.getFactory().getSession().createDaoImpl(CarDao3.class);
@@ -172,4 +179,14 @@ List<Car> cars = dao.findAll();
 for (Car car1 : cars) {
     System.out.println(car1);
 }
+
+
+
+其他功能使用方法未写入此文档中  如果要使用其他功能  请仔细阅读此文档  并阅读部分源码  查看方法的参数和返回值 
+
+即能够使用其他功能
+
+
+
+
 
