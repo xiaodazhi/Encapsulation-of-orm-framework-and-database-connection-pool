@@ -28,6 +28,7 @@
 将策略作为参数传入方法  框架就可根据用户提供的策略来组成对象
 例如
 
+```java
 class CarMapper implements RowMapper<Car> {
     @Override
     public Car mapping(Map<String,Object> rs) throws Exception {
@@ -38,7 +39,7 @@ class CarMapper implements RowMapper<Car> {
         return new Car(cno,cname,color,price);
     }
 }
-
+```
 
 
 
@@ -151,20 +152,22 @@ dao.findAll("bmw3");
 
 示例
 
+
+```java
 public interface CarDao {
     @Insert("insert into t_car values(null, #{cname}, #{color}, #{price})")
     public int save(Car car);
 
-​	@Delete("delete from t_car where cno = #{cno}")
-​	public int delete(int cno);
+    @Delete("delete from t_car where cno = #{cno}")
+    public int delete(int cno);
 
-​	@Select("select * from t_car")
-​	public List<Car> findAll();
+    @Select("select * from t_car")
+    public List<Car> findAll();
 
-​	@Select("select * from t_car where cno = #{cno}")
-​	public Car findById(int cno) ;
-
+    @Select("select * from t_car where cno = #{cno}")
+    public Car findById(int cno) ;
 }
+```
 
 
 
